@@ -9,8 +9,6 @@
     "sails-disk": "~0.9.0",
     "ejs": "0.8.4",
     "optimist": "0.3.4",
-    "passport": "~0.2.0",
-    "passport-local": "~0.1.6",
     "bcrypt-nodejs": "0.0.3",
     "jwt-simple": "~0.1.0",
     "moment": "~2.5.1"
