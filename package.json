@@ -1,0 +1,26 @@
+{
+  "name": "sails_api",
+  "private": true,
+  "version": "0.0.0",
+  "description": "a Sails application",
+  "dependencies": {
+    "sails": "0.9.8",
+    "grunt": "0.4.1",
+    "sails-disk": "~0.9.0",
+    "ejs": "0.8.4",
+    "optimist": "0.3.4",
+    "passport": "~0.2.0",
+    "passport-local": "~0.1.6",
+    "bcrypt-nodejs": "0.0.3",
+    "jwt-simple": "~0.1.0",
+    "moment": "~2.5.1"
+  },
+  "scripts": {
+    "start": "node app.js",
+    "debug": "node debug app.js"
+  },
+  "main": "app.js",
+  "repository": "",
+  "author": "",
+  "license": ""
+}
