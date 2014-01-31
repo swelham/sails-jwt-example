@@ -25,6 +25,37 @@ function doesUsernameExist (username, done) {
         });
 }
 
+/*
+    todo: look at updating this to not increment the failed attempts
+    if the same incorrect password is being used
+*/
+function updateUserLockState (user, done) {
+    var now = moment().utc(),
+        lastFailure = null; 
+
+    if (user.lastPasswordFailure) {
+        lastFailure = moment(user.lastPasswordFailure);
+    }
+
+    // do we have a previously failed login attempt in the last 30 minutes
+    if (lastFailure !== null && now.diff(lastFailure, 'seconds') < 60) {
+        user.passwordFailures += 1;
+
+        // lock if this is the 4th incorrect attempt
+        if (user.passwordFailures > 3) {
+            user.locked = true;
+        }
+    }
+    else {
+        // reset the failed attempts
+        user.passwordFailures = 1;
+    }
+
+    user.lastPasswordFailure = now.toDate()
+
+    user.save(done);
+}
+
 module.exports = {
     hashPassword: function (password, salt, done) {
         hash(password, salt, function (err, hashedPassword, salt) {
@@ -107,13 +138,22 @@ module.exports = {
             .findOne({ username: username })
             .done(function (err, user) {
                 if (err) return done(err);
-                if (!user) return done();
+                if (!user || user.locked) return done();
 
                 user.validatePassword(password, function (vpErr, isValid) {
                     if (vpErr) return done(vpErr);
-                    if (!isValid) return done();
 
-                    return done(null, user);
+                    if (!isValid)
+                    {
+                        updateUserLockState(user, function (err) {
+                            if (err) return done(err);
+
+                            return done();
+                        });
+                    }
+                    else {
+                        return done(null, user);
+                    }
                 });
             });
     }
