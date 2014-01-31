@@ -8,7 +8,7 @@ A sails.js user management example using JWT for authorisation
 * ~~Login~~
 * ~~Token generation & valiadtion~~
 * ~~Password reset~~
-* Account locking
+* ~~Account locking~~
 * User emails - need to decide how to handle user email address
     * 1 - option to store email as username or separate property
     * 2 - always store email as a property and copy email to username
