@@ -12,7 +12,8 @@
     "bcrypt-nodejs": "0.0.3",
     "jwt-simple": "~0.1.0",
     "moment": "~2.5.1",
-    "sails-mongo": "~0.9.6"
+    "sails-mongo": "~0.9.6",
+    "shortid": "~2.0.0"
   },
   "scripts": {
     "start": "node app.js",

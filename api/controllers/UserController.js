@@ -15,7 +15,7 @@ module.exports = {
             if (!user) {
                 return res.send('This username is already in use', 400);
             }
-
+            
             UserManager.generateUserToken(user, function (err, token) {
                 if (err) return res.send(500);
                 
@@ -37,6 +37,32 @@ module.exports = {
                 });
             }
         );
+    },
+
+    forgotPassword: function (req, res) {
+        UserManager.generateResetToken(req.param('username'), function (err) {
+            if (err) return res.send(500);
+            
+            res.send(200);
+        });
+    },
+
+    resetPassword: function (req, res) {
+        // todo: add reset via old password
+        var token = req.param('token'),
+            username = req.param('username'),
+            newPassword = req.param('newPassword');
+
+        UserManager.resetPasswordByToken(username, token, newPassword, function (err, user) {
+            if (err) return res.send(500);
+            if (!user) return res.send(404);
+
+            UserManager.generateUserToken(user, function (err, token) {
+                if (err) return res.send(500);
+                
+                return res.send(token, 200);
+            });
+        });
     },
 
     _config: {}

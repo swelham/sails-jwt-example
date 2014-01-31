@@ -1,6 +1,7 @@
 var bcrypt = require('bcrypt-nodejs');
 var jwt = require('jwt-simple');
 var moment = require('moment');
+var shortid = require('shortid');
 
 // this would need to live in sails config
 var jwtSecret = 'xStmbyc066BOFn40gIr29y09Ud94z1P7';
@@ -74,11 +75,10 @@ module.exports = {
                 return done();
             }
 
-            User.create({
-                username: values.username,
-                password: values.password
-            }).done(function (createErr, user) {
+            User.create(values).done(function (createErr, user) {
                 if (createErr) return done(createErr);
+
+                // todo: send welcome email
 
                 done(null, user);
             });
@@ -156,12 +156,47 @@ module.exports = {
                     }
                 });
             });
-    }
+    },
 
-    /* 
-    todo:
-        * reset password
-        * forgot password
-        * handle account locking
-    */
+    generateResetToken: function (username, done) {
+        User
+            .findOne({ username: username })
+            .done(function (err, user) {
+                if (err) return done(err);
+                if (!user) return done();
+
+                user.resetToken = shortid.generate();
+
+                user.save(function (saveErr, user) {
+                   if (saveErr) return done(saveErr);
+                   
+                    /*
+                    todo: email the token to the user - look in db for token or
+                          uncomment line below
+                    */
+                    // console.log(user.resetToken);
+
+                   done(null);
+                });
+            });
+    },
+
+    resetPasswordByToken: function (username, token, newPassword, done) {
+        User
+            .findOne({ username: username, resetToken: token })
+            .done(function (err, user) {
+                if (err) return done(err);
+                if (!user) return done();
+
+                hash(newPassword, null, function (hashErr, hashedPassword, salt) {
+                    if (hashErr) return done(hashErr);
+
+                    user.salt = salt;
+                    user.password = hashedPassword;
+                    user.resetToken = null;
+
+                    user.save(done);
+                });
+            });
+    }
 };
