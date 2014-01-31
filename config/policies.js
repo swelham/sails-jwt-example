@@ -20,7 +20,9 @@ module.exports.policies = {
     
     'user': {
         'create': true,
-        'login': true
+        'login': true,
+        'forgotPassword': true,
+        'resetPassword': true
     }
 
   /*

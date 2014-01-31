@@ -5,7 +5,7 @@ module.exports = {
             required: true,
             type: 'string'
         },
-
+        
         password: {
             type: 'string',
             required: true
@@ -29,6 +29,10 @@ module.exports = {
             type: 'datetime'
         },
 
+        resetToken: {
+            type: 'string'
+        },
+
         toJSON: function () {
             var obj = this.toObject();
 
@@ -39,6 +43,10 @@ module.exports = {
         },
 
         validatePassword: function (password, done) {
+            if (!password || password.length === 0) {
+                return done(null, false);
+            }
+
             var obj = this.toObject();
 
             UserManager.hashPassword(password, obj.salt, function (err, hashedPassword) {
