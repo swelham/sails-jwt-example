@@ -38,8 +38,8 @@ function updateUserLockState (user, done) {
         lastFailure = moment(user.lastPasswordFailure);
     }
 
-    // do we have a previously failed login attempt in the last 30 minutes
-    if (lastFailure !== null && now.diff(lastFailure, 'seconds') < 60) {
+    // do we have a previously failed login attempt in the last x amount of time
+    if (lastFailure !== null && now.diff(lastFailure, 'seconds') < 1800) {
         user.passwordFailures += 1;
 
         // lock if this is the 4th incorrect attempt
