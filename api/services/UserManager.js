@@ -57,6 +57,18 @@ function updateUserLockState (user, done) {
     user.save(done);
 }
 
+function setUserPassword (user, password, done) {
+    hash(password, null, function (err, hashedPassword, salt) {
+        if (err) return done(err);
+
+        user.salt = salt;
+        user.password = hashedPassword;
+        user.resetToken = null;
+
+        user.save(done);
+    });
+}
+
 module.exports = {
     hashPassword: function (password, salt, done) {
         hash(password, salt, function (err, hashedPassword, salt) {
@@ -181,6 +193,15 @@ module.exports = {
             });
     },
 
+    resetPassword: function (username, oldPassword, newPassword, done) {
+        this.authenticateUserPassword(username, oldPassword, function (err, user) {
+            if (err) return done(err);
+            if (!user) return done(null, false);
+
+            setUserPassword(user, newPassword, done);
+        })
+    },
+
     resetPasswordByToken: function (username, token, newPassword, done) {
         User
             .findOne({ username: username, resetToken: token })
@@ -188,15 +209,7 @@ module.exports = {
                 if (err) return done(err);
                 if (!user) return done();
 
-                hash(newPassword, null, function (hashErr, hashedPassword, salt) {
-                    if (hashErr) return done(hashErr);
-
-                    user.salt = salt;
-                    user.password = hashedPassword;
-                    user.resetToken = null;
-
-                    user.save(done);
-                });
+                setUserPassword(user, newPassword, done);
             });
     }
 };

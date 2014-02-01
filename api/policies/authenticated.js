@@ -7,7 +7,7 @@ module.exports = function (req, res, next) {
     
     // validate we have all params
     if (!tokenValue || !issueDate) {
-        return res.send('Auth not sent', 400);
+        return res.send(401);
     }
     
     // validate token and set req.user if we have a valid token

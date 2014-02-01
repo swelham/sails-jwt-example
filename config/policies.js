@@ -22,7 +22,7 @@ module.exports.policies = {
         'create': true,
         'login': true,
         'forgotPassword': true,
-        'resetPassword': true
+        'resetPasswordByToken': true
     }
 
   /*

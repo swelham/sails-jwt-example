@@ -1,4 +1,8 @@
 
+function isEmpty (str) {
+    return (!str || str.length === 0);
+}
+
 module.exports = {
 
     index: function (req, res) {
@@ -47,12 +51,37 @@ module.exports = {
         });
     },
 
+    /****************************************************************
+        the issue here is the authenticated policy doesn't get hit
+        so we need to split this into two separate actions one for
+        reset by password and one for reset by token
+    ****************************************************************/
     resetPassword: function (req, res) {
-        // todo: add reset via old password
+        var oldPassword = req.param('oldPassword'),
+            username = req.param('username'),
+            newPassword = req.param('newPassword');
+
+        if (isEmpty(oldPassword) || isEmpty(newPassword)) {
+            return res.send(400);
+        }
+
+        UserManager.resetPassword(username, oldPassword, newPassword, function (err, user) {
+            if (err) return res.send(500);
+            if (!user) return res.send(401);
+
+            return res.send(200);
+        });
+    },
+
+    resetPasswordByToken: function (req, res) {
         var token = req.param('token'),
             username = req.param('username'),
             newPassword = req.param('newPassword');
 
+        if (isEmpty(token) || isEmpty(newPassword)) {
+            return res.send(400);
+        }
+        
         UserManager.resetPasswordByToken(username, token, newPassword, function (err, user) {
             if (err) return res.send(500);
             if (!user) return res.send(404);
