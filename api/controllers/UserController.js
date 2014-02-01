@@ -51,11 +51,6 @@ module.exports = {
         });
     },
 
-    /****************************************************************
-        the issue here is the authenticated policy doesn't get hit
-        so we need to split this into two separate actions one for
-        reset by password and one for reset by token
-    ****************************************************************/
     resetPassword: function (req, res) {
         var oldPassword = req.param('oldPassword'),
             username = req.param('username'),
