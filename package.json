@@ -27,7 +27,7 @@
   "scripts": {
     "start": "node app.js",
     "debug": "node debug app.js",
-    "test": "cd test && mocha ."
+    "test": "cd test && mocha . integration -R spec"
   },
   "main": "app.js",
   "repository": {
@@ -37,6 +37,8 @@
   "author": "anonymous node/sails user",
   "license": "",
   "devDependencies": {
-    "mocha": "~1.20.1"
+    "mocha": "~1.20.1",
+    "supertest": "~0.13.0",
+    "should": "~4.0.0"
   }
 }
