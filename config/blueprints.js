@@ -57,7 +57,7 @@ module.exports.blueprints = {
   // if you'd like to continue to use controller/action autorouting in a production deployment,
   // you must take great care not to inadvertently expose unsafe/unintentional controller logic
   // to GET requests.
-  actions: false,
+  actions: true,
 
 
 
@@ -86,7 +86,7 @@ module.exports.blueprints = {
   // for the controller's`find`, `create`, `update`, and `destroy` actions.
   //
   // `shortcuts` are enabled by default, but should be disabled in production.
-  shortcuts: false,
+  shortcuts: true,
 
 
 

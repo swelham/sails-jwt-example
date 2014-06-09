@@ -1,5 +1,5 @@
 {
-  "name": "sails-jwt-example",
+  "name": "__new",
   "private": true,
   "version": "0.0.0",
   "description": "a Sails application",
@@ -21,24 +21,17 @@
     "grunt-contrib-uglify": "~0.4.0",
     "grunt-contrib-cssmin": "~0.9.0",
     "grunt-contrib-less": "~0.10.0",
-    "grunt-contrib-coffee": "~0.10.1",
-    "sails-mongo": "~0.10.0-rc5"
+    "grunt-contrib-coffee": "~0.10.1"
   },
   "scripts": {
     "start": "node app.js",
-    "debug": "node debug app.js",
-    "test": "cd test && mocha . integration -R spec"
+    "debug": "node debug app.js"
   },
   "main": "app.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/anonymous node/sails user/sails-jwt-example.git"
+    "url": "git://github.com/anonymous node/sails user/__new.git"
   },
   "author": "anonymous node/sails user",
-  "license": "",
-  "devDependencies": {
-    "mocha": "~1.20.1",
-    "supertest": "~0.13.0",
-    "should": "~4.0.0"
-  }
+  "license": ""
 }
