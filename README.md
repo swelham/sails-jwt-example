@@ -1,3 +1,3 @@
-# __new
+# sails-jwt-example
 
-a [Sails](http://sailsjs.org) application
+A sails.js user management example using JWT for authentication
