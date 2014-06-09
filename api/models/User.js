@@ -1,13 +1,13 @@
 var bcrypt = require('bcrypt-nodejs');
 
 function hash(value, salt, done) {
-    salt = salt || bcrypt.genSaltSync();
+  salt = salt || bcrypt.genSaltSync();
 
-    bcrypt.hash(value, salt, null, function (err, hash) {
-        if (err) return done(err);
+  bcrypt.hash(value, salt, null, function (err, hash) {
+    if (err) return done(err);
 
-        done(null, hash, salt);
-    });
+    done(null, hash, salt);
+  });
 }
 
 module.exports = {
@@ -18,7 +18,7 @@ module.exports = {
       type: 'string',
       unique: true
     },
-    
+
     password: {
       type: 'string',
       required: true
@@ -71,4 +71,3 @@ module.exports = {
     });
   }
 };
-

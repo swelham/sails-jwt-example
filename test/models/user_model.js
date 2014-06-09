@@ -47,7 +47,7 @@ describe('user_model', function () {
 
       User.create(data, function (err, user) {
         if (err) return done(err);
-        
+  
         user.username.should.equal(data.username);
         user.password.should.be.ok;
         user.password.should.not.equal(originalPassword);

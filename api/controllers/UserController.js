@@ -6,6 +6,7 @@
  */
 
 module.exports = {
-	
+	find: function (req, res) {
+	  res.notFound();
+	}
 };
-

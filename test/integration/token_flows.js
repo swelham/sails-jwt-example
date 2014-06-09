@@ -1,25 +1,13 @@
+var should = require('should');
 var request = require('supertest');
 
 var baseUrl = '/token';
 var resourceUrl;
 
-var validUserCredentials = { 
-  username: 'username', 
-  password: 'password' 
+var validUserCredentials = {
+  username: 'username',
+  password: 'password'
 };
-
-function assertPostResponse (res, done) {
-  try {
-    var data = JSON.parse(res.body);
-
-    data.token.should.be.ok;
-  }
-  catch (e) {
-    should.fail('error parsing res.body as json');
-  }
-
-  done();
-}
 
 describe('/token', function () {
   before(function (done) {
@@ -32,10 +20,11 @@ describe('/token', function () {
   });
 
   describe('GET', function () {
-    it('should return 404', function () {
+    it('should return 404', function (done) {
       request(sails_app)
         .get(resourceUrl)
-        .expect(404);
+        .expect(404)
+        .end(done);
     });
   });
 
@@ -69,7 +58,8 @@ describe('/token', function () {
         .end(function (err, res) {
           if (err) return done(err);
 
-          return assertPostResponse(res, done);
+          res.body.token.should.be.ok;
+          done();
         });
     });
 
@@ -81,24 +71,27 @@ describe('/token', function () {
         .end(function (err, res) {
           if (err) return done(err);
 
-          return assertPostResponse(res, done);
+          res.body.token.should.be.ok;
+          done();
         });
     });
   });
 
   describe('PUT', function () {
-    it('should return 404', function () {
+    it('should return 404', function (done) {
       request(sails_app)
         .put(resourceUrl)
-        .expect(404);
+        .expect(404)
+        .end(done);
     });
   });
 
   describe('DELETE', function () {
-    it('should return 404', function () {
+    it('should return 404', function (done) {
       request(sails_app)
         .delete(resourceUrl)
-        .expect(404);
+        .expect(404)
+        .end(done);
     });
   });
 });
