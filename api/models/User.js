@@ -46,6 +46,19 @@ module.exports = {
     resetToken: {
       type: 'string',
       defaultsTo: null
+    },
+
+    toJSON: function () {
+      var obj = this.toObject();
+
+      delete obj.password;
+      delete obj.salt;
+      delete obj.locked;
+      delete obj.passwordFailures;
+      delete obj.lastPasswordFailure;
+      delete obj.resetToken;
+
+      return obj;
     }
   },
 

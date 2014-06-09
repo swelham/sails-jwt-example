@@ -3,6 +3,35 @@ var should = require('should');
 var data;
 
 describe('user_model', function () {
+  after(function (done) {
+    User.destroy(done);
+  });
+
+  describe('#toJSON', function () {
+    var userJson;
+
+    before(function (done) {
+      User.create({
+        username: 'user_tojson_test',
+        password: 'password'
+      }, function (err, user) {
+        if (err) return done(err);
+
+        userJson = user.toJSON();
+        done();
+      });
+    });
+
+    it('should not return security attributes', function () {
+      userJson.should.not.have.property('password');
+      userJson.should.not.have.property('salt');
+      userJson.should.not.have.property('locked');
+      userJson.should.not.have.property('passwordFailures');
+      userJson.should.not.have.property('lastPasswordFailure');
+      userJson.should.not.have.property('resetToken');
+    });
+  });
+
   describe('#create', function () {
     beforeEach(function (done) {
        data = {
