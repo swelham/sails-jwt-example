@@ -6,10 +6,10 @@ before(function (done) {
   var config = {
     log: {
       level: 'error'
-    },
+    }/*,
     connections: {
-      default: 'testDb'
-    }
+      default: 'localDiskDb'
+    }*/
   };
 
   Sails.lift(config, function (err, s) {
