@@ -17,6 +17,7 @@ before(function (done) {
 
     console.log('sails lift\n');
     global.sails_app = s.hooks.http.app;
+
     done();
   });
 });

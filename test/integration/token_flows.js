@@ -1,6 +1,6 @@
 var request = require('supertest');
 
-var baseUrl = '/api/token';
+var baseUrl = '/token';
 var resourceUrl;
 
 var validUserCredentials = { 
@@ -21,12 +21,14 @@ function assertPostResponse (res, done) {
   done();
 }
 
-describe('/api/token', function () {
+describe('/token', function () {
   before(function (done) {
-    // todo: create test user
-    // todo: set resourceUrl to baseUrl + '/' + user.id
-    resourceUrl = baseUrl + '/-1';
-    done();
+    User.create(validUserCredentials, function (err, user) {
+      if (err) return done(err);
+
+      resourceUrl = baseUrl + '/' + user.id;
+      done();
+    });
   });
 
   describe('GET', function () {
