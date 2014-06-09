@@ -34,5 +34,9 @@
     "url": "git://github.com/anonymous node/sails user/__new.git"
   },
   "author": "anonymous node/sails user",
-  "license": ""
+  "license": "",
+  "devDependencies": {
+    "mocha": "~1.20.1",
+    "supertest": "~0.13.0"
+  }
 }
