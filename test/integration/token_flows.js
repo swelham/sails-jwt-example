@@ -1,10 +1,11 @@
 var should = require('should');
 var request = require('supertest');
+var merge = require('merge');
 
 var baseUrl = '/token';
 var resourceUrl;
 
-var validUserCredentials = {
+var userCredentials = {
   username: 'username',
   password: 'password'
 };
@@ -12,7 +13,9 @@ var validUserCredentials = {
 describe('/token', function () {
   before(function (done) {
     User.destroy(function () {
-      User.create(validUserCredentials, function (err, user) {
+      var clonedCredentials = merge(true, userCredentials);
+
+      User.create(clonedCredentials, function (err, user) {
         if (err) return done(err);
 
         resourceUrl = baseUrl + '/' + user.id;
@@ -33,7 +36,7 @@ describe('/token', function () {
     it('should return 400 for missing username', function (done) {
       request(sails_app)
         .post(baseUrl)
-        .send({ password: validUserCredentials.password })
+        .send({ password: userCredentials.password })
         .expect(400)
         .end(function (err, res) {
           if (err) return done(err);
@@ -46,7 +49,7 @@ describe('/token', function () {
     it('should return 400 for missing password', function (done) {
       request(sails_app)
         .post(baseUrl)
-        .send({ username: validUserCredentials.username })
+        .send({ username: userCredentials.username })
         .expect(400)
         .end(function (err, res) {
           if (err) return done(err);
@@ -59,14 +62,14 @@ describe('/token', function () {
     it('should return 401 for incorrectly cased password', function (done) {
       request(sails_app)
         .post(baseUrl)
-        .send({ username: validUserCredentials.username, password: 'Password' })
+        .send({ username: userCredentials.username, password: 'Password' })
         .expect(401, done);
     });
 
-    it('should return token for correct user name and password'/*, function (done) {
+    it('should return token for correct username and password', function (done) {
       request(sails_app)
         .post(baseUrl)
-        .send(validUserCredentials)
+        .send(userCredentials)
         .expect(201)
         .end(function (err, res) {
           if (err) return done(err);
@@ -74,12 +77,12 @@ describe('/token', function () {
           res.body.token.should.be.ok;
           done();
         });
-    }*/);
+    });
 
-    it('should return token for any cased user name with correct password'/*, function (done) {
+    it('should return token for any cased username with correct password', function (done) {
       request(sails_app)
         .post(baseUrl)
-        .send(validUserCredentials)
+        .send(userCredentials)
         .expect(201)
         .end(function (err, res) {
           if (err) return done(err);
@@ -87,7 +90,7 @@ describe('/token', function () {
           res.body.token.should.be.ok;
           done();
         });
-    }*/);
+    });
   });
 
   describe('PUT', function () {

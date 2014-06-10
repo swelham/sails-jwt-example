@@ -34,16 +34,20 @@ module.exports = {
     User.findOne({ username: username }, function (err, user) {
       if (err) return res.serverError(err);
       if (!user) return res.unauthorized();
-
+      
       user.comparePassword(password, function (compareErr, matched) {
-        if (compareErr) return res.servercompareError(compareErr);
+        if (compareErr) return res.serverError(compareErr);
         if (!matched) return res.unauthorized();
 
-        // todo: create token
-        return res.ok();
+        TokenService.serialize(user, function (serializeErr, token, expires) {
+          if (serializeErr) return res.serverError(serializeErr);
+
+          return res.created({
+            token: token,
+            expires: expires.format()
+          });
+        });
       });
     });
-
-    return res.ok();
   }
 };
