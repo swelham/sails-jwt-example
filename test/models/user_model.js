@@ -73,6 +73,48 @@ describe('user_model', function () {
         });
       });
     });
+  });
 
+  describe('#comparePassword', function () {
+    var user;
+
+    before(function (done) {
+      User.create({
+        username: 'user_comparepassword_test',
+        password: 'password'
+      }, function (err, usr) {
+        if (err) return done(err);
+
+        user = usr;
+        done();
+      });
+    });
+
+    it('should not match an invalid password', function (done) {
+      user.comparePassword('wrongpassword', function (err, matched) {
+        if (err) return done(err);
+
+        matched.should.be.false;
+        done();
+      });
+    });
+
+    it('should not match a valid password with incorrect casing', function (done) {
+      user.comparePassword('Password', function (err, matched) {
+        if (err) return done(err);
+
+        matched.should.be.false;
+        done();
+      });
+    });
+
+    it('should match a valid correct password', function (done) {
+      user.comparePassword('password', function (err, matched) {
+        if (err) return done(err);
+
+        matched.should.be.true;
+        done();
+      });
+    });
   });
 });

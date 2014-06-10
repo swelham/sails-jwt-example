@@ -59,6 +59,16 @@ module.exports = {
       delete obj.resetToken;
 
       return obj;
+    },
+
+    comparePassword: function (password, done) {
+      var obj = this.toObject();
+
+      hash(password, obj.salt, function (err, hashedPassword) {
+        if (err) return done(err);
+
+        done(null, hashedPassword === obj.password);
+      });
     }
   },
 
