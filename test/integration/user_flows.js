@@ -91,4 +91,20 @@ describe('/user', function () {
         });
     });
   });
+
+  describe('PUT', function () {
+    it('should return 404', function (done) {
+      request(sails_app)
+        .put(resourceUrl)
+        .expect(404, done);
+    });
+  });
+
+  describe('DELETE', function () {
+    it('should return 404', function (done) {
+      request(sails_app)
+        .delete(resourceUrl)
+        .expect(404, done);
+    });
+  });
 });

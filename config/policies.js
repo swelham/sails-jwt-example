@@ -21,7 +21,9 @@ module.exports.policies = {
   '*': true,
 
   UserController: {
-    find: 'hiddenEndpoint'
+    find: 'hiddenEndpoint',
+    update: 'hiddenEndpoint',
+    destroy: 'hiddenEndpoint'
   }
 
 	// Here's an example of mapping some policies to run before
