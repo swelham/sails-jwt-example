@@ -6,7 +6,14 @@
  */
 
 module.exports = {
-	find: function (req, res) {
-	  res.notFound();
-	}
+  create: function (req, res) {
+    User.create({
+      username: req.body.username,
+      password: req.body.password
+    }, function (err, user) {
+      if (err) return res.badRequest(err);
+
+      res.created(user);
+    });
+  }
 };
