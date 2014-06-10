@@ -31,6 +31,7 @@ module.exports.routes = {
     view: 'homepage'
   },
 
+  'post /token': 'TokenController.create'
 
   // Custom routes here...
 
