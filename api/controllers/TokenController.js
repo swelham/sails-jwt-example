@@ -39,6 +39,7 @@ module.exports = {
         if (compareErr) return res.servercompareError(compareErr);
         if (!matched) return res.unauthorized();
 
+        // todo: create token
         return res.ok();
       });
     });
