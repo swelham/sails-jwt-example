@@ -59,6 +59,13 @@ describe('/token', function () {
         });
     });
 
+    it('should return 401 for incorrect password', function (done) {
+      request(sails_app)
+        .post(baseUrl)
+        .send({ username: userCredentials.username, password: 'wrong_password' })
+        .expect(401, done);
+    });
+    
     it('should return 401 for incorrectly cased password', function (done) {
       request(sails_app)
         .post(baseUrl)

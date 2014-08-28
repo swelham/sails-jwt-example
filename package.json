@@ -29,7 +29,7 @@
   "scripts": {
     "start": "node app.js",
     "debug": "node debug app.js",
-    "test": "mocha test test/integration test/models -R spec"
+    "test": "mocha test test/integration test/models -R spec --compilers coffee:coffee-script/register"
   },
   "main": "app.js",
   "repository": {
