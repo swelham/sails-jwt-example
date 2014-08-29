@@ -89,7 +89,10 @@ describe('/token', function () {
     it('should return token for any cased username with correct password', function (done) {
       request(sails_app)
         .post(baseUrl)
-        .send(userCredentials)
+        .send({
+          username: 'Username',
+          password: userCredentials.password
+        })
         .expect(201)
         .end(function (err, res) {
           if (err) return done(err);
